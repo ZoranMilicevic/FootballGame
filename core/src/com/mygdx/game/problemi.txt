@@ -1,0 +1,21 @@
+/*
+problemi
+1. hitting point-los ai
+2. bitmap font
+3. 2d modeli
+
+da se uradi jos
+1. muzika
+2. meni
+3. in game meni
+4. unos podataka
+5. baza podataka
+6. Toast kad se postigne gool
+
+prvo sto ces da implementiras kad sledeci put radis je
+hitting point
+da zamenis bitmap font
+da zavrsis sa modelima i slikama
+
+
+*/
