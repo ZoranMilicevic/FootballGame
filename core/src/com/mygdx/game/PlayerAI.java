@@ -105,7 +105,7 @@ public class PlayerAI extends Thread {
             b.resetPosition();
             r.updateResultHuman();
             vY=0;
-            Gdx.input.vibrate(2000);
+            Gdx.input.vibrate(1500);
         }
 
     }

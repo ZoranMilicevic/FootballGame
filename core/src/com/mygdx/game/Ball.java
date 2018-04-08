@@ -29,13 +29,6 @@ public class Ball extends Thread {
         spr.setSize(60,60);
 
         spr.setPosition(x,y);
-        double i=Math.random();
-        if(i<0.5)vX=-delta;
-        else vX=delta;
-
-        i=Math.random();
-        if(i<0.5)vY=-delta;
-        else vY=delta;
     }
 
     @Override
@@ -74,7 +67,15 @@ public class Ball extends Thread {
     }
 
     public void setDelta(float delta){
+
         this.delta=delta;
+        double i=Math.random();
+        if(i<0.5)vX=-delta;
+        else vX=delta;
+
+        i=Math.random();
+        if(i<0.5)vY=-delta;
+        else vY=delta;
     }
 
     public synchronized void resetPosition(){

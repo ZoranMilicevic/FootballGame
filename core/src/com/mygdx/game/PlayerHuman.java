@@ -101,6 +101,8 @@ public class PlayerHuman extends Thread implements InputProcessor{
             b.resetPosition();
             r.updateResultAI();
             vY=0;
+            Gdx.input.vibrate(1500);
+
 
         }
     }
@@ -112,7 +114,6 @@ public class PlayerHuman extends Thread implements InputProcessor{
             if(r1.overlaps(r2)) {
                 b.hit();
                 vY=0;
-                Gdx.input.vibrate(2000);
             }
         }
     }

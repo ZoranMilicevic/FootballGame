@@ -67,16 +67,27 @@ public class setUpMenu implements Screen {
         tfstyle.font=font;
         tfstyle.fontColor= Color.BLACK;
 
-        name= new TextField("Enter your name here", tfstyle);
-        name.setSize(w/3, h/24);
-        name.setPosition(w/2-name.getWidth()/2 ,10*h/12);
+        name= new TextField("", tfstyle);
+        name.setSize(w/3, h/12);
+        name.setPosition(w/2 ,10*h/12);
         game.info.addActor(name);
 
-        dificulty= new TextField("Enter dificulty(1-5)", tfstyle);
-        dificulty.setSize(w/3, h/24);
-        dificulty.setPosition(w/2-name.getWidth()/2, 7*h/12);
+        dificulty= new TextField("", tfstyle);
+        dificulty.setSize(w/3, h/12);
+        dificulty.setPosition(w/2, 7*h/12);
         game.info.addActor(dificulty);
 
+        TextField text1= new TextField("Enter your name here:", tfstyle);
+        text1.setSize(w/3, h/12);
+        text1.setPosition(w/6, 10*h/12);
+        text1.setDisabled(true);
+        game.info.addActor(text1);
+
+        TextField text2= new TextField("Enter dificulty here (1-5):", tfstyle);
+        text2.setSize(w/3, h/12);
+        text2.setPosition(w/6, 7*h/12);
+        text2.setDisabled(true);
+        game.info.addActor(text2);
 
     }
 
