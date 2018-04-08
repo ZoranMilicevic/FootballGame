@@ -20,12 +20,12 @@ public class Result {
 
     public synchronized void updateResultAI(){
         AI++;
-        result= "AI     " + AI + " : " + human + "     Zoran";
+        result= "AI     " + AI + " : " + human + "   " + nameHuman;
     }
 
     public synchronized void updateResultHuman(){
         human++;
-        result= "AI     " + AI + " : " + human + "     Zoran";
+        result= "AI     " + AI + " : " + human + "    " + nameHuman;
     }
 
     public synchronized void reset(){
@@ -39,6 +39,7 @@ public class Result {
 
     public void setNameHuman(String name){
         nameHuman=name;
+        result= "AI     " + AI + " : " + human + "   " + nameHuman;
     }
 
     public String getNameHuman(){

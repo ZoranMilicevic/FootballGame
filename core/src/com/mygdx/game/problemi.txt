@@ -5,9 +5,6 @@ problemi
 3. 2d modeli
 
 da se uradi jos
-1. meni
-2. in game meni
-3. unos podataka meni
 4. baza podataka
 5. muzika
 6. Toast kad se postigne gool

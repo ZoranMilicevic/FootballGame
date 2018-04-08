@@ -54,7 +54,9 @@ public class MyGdxGame implements Screen {
 	}
 
 	public void setDificulty(int dificulty){
-
+		b.setDelta(10*dificulty);
+		ph.setDelta(10*dificulty);
+		pa.setDelta(10*dificulty);
 	}
 
 	public void start(){

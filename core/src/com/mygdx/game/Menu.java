@@ -89,17 +89,8 @@ public class Menu implements Screen {
     }
 
     private void pressedStart(){
-        if(game.secondGame) {
-            game.r.reset();
-            game.mg= new MyGdxGame(game);
-            game.batch= new SpriteBatch();
-        }
-        MyGdxGame k = game.getMygdxGame();
-        game.setScreen(k);
-        k.start();
-
-       /* game.setScreen(game.sum);
-        Gdx.input.setInputProcessor(game.info);*/
+        game.setScreen(game.sum);
+        Gdx.input.setInputProcessor(game.info);
     }
 
     private void pressedScores(){

@@ -73,7 +73,7 @@ public class Ball extends Thread {
         return niz;
     }
 
-    public synchronized void setDelta(float delta){
+    public void setDelta(float delta){
         this.delta=delta;
     }
 

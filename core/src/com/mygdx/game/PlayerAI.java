@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
-
 /**
  * Created by Zoran Milicevic on 3/5/2018.
  */
@@ -53,9 +52,7 @@ public class PlayerAI extends Thread {
 
                     if(vY!=0) {
                         y += vY;
-                        Gdx.app.log("zoran", "y je " + y + " hitting point je " + hittingPoint + "brzina je " + vY);
-                        if(y < hittingPoint && hittingPoint < y+spr.getHeight())vY=0;
-                        Gdx.app.log("zoran", "brzina je " + vY);
+                        if(y+40 < hittingPoint && hittingPoint < y+spr.getHeight()-40)vY=0;
                         if (y <= 0) {
                             y = 0;
                             vY = 0;
@@ -108,7 +105,7 @@ public class PlayerAI extends Thread {
             b.resetPosition();
             r.updateResultHuman();
             vY=0;
-            Gdx.app.log("zoran", "SCORED!!!");
+            Gdx.input.vibrate(2000);
         }
 
     }
@@ -120,7 +117,6 @@ public class PlayerAI extends Thread {
             if(r1.overlaps(r2)) {
                 b.hit();
                 vY=0;
-                Gdx.app.log("zoran", "HIT!!!");
             }
         }
     }

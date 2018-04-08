@@ -26,6 +26,7 @@ public class setUpMenu implements Screen {
     private TextButton submit;
     private TextField name;
     private BitmapFont font;
+    private TextField dificulty;
 
     public setUpMenu(Football game){
         this.game=game;
@@ -50,7 +51,7 @@ public class setUpMenu implements Screen {
 
         submit= new TextButton("Submit", style);
         submit.setSize(w/3,h/6);
-        submit.setPosition(w/2-submit.getWidth()/2,h/12);
+        submit.setPosition(w/2-submit.getWidth()/2,4*h/12);
         game.info.addActor(submit);
 
         ClickListener cl3= new ClickListener(){
@@ -68,8 +69,15 @@ public class setUpMenu implements Screen {
 
         name= new TextField("Enter your name here", tfstyle);
         name.setSize(w/3, h/24);
-        name.setPosition(w/2-name.getWidth()/2 ,5*h/12);
+        name.setPosition(w/2-name.getWidth()/2 ,10*h/12);
         game.info.addActor(name);
+
+        dificulty= new TextField("Enter dificulty(1-5)", tfstyle);
+        dificulty.setSize(w/3, h/24);
+        dificulty.setPosition(w/2-name.getWidth()/2, 7*h/12);
+        game.info.addActor(dificulty);
+
+
     }
 
 
@@ -77,8 +85,6 @@ public class setUpMenu implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(1,1,1,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        Batch b=game.info.getBatch();
-        font.draw(b, "Enter yout name here", 0,0);
         game.info.act();
         game.info.draw();
     }
@@ -86,6 +92,11 @@ public class setUpMenu implements Screen {
     private void pressedSubmit(){
         String n=name.getText();
         game.r.setNameHuman(n);
+        int dif=Integer.parseInt(dificulty.getText());
+        if(dif<1)dif=1;
+        if(dif>5)dif=5;
+        game.mg.setDificulty(dif);
+
 
 
         if(game.secondGame) {
