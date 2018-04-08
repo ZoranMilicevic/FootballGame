@@ -5,7 +5,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -17,38 +19,36 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class Menu implements Screen {
     private Football game;
-
-    private TextureAtlas buttonAtlas;
-    private Skin skin;
-
     private TextButton start;
     private TextButton exit;
     private TextButton scores;
-    private TextButton.TextButtonStyle textbuttonStyle;
-
     private BitmapFont font;
 
 
     public Menu(Football game){
         this.game=game;
-        buttonAtlas= new TextureAtlas("ui-blue.atlas");
-        skin= new Skin();
-        skin.addRegions(buttonAtlas);
 
         float w = Gdx.graphics.getWidth();
         float h=Gdx.graphics.getHeight();
 
-        font= new BitmapFont();
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("helv.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter= new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size=42;
+        font= generator.generateFont(parameter);
 
-        textbuttonStyle=new TextButton.TextButtonStyle();
+        TextureAtlas buttonAtlas= new TextureAtlas("ui-blue.atlas");
+        Skin skin= new Skin();
+        skin.addRegions(buttonAtlas);
+
+        TextButton.TextButtonStyle textbuttonStyle=new TextButton.TextButtonStyle();
         textbuttonStyle.font= font;
         textbuttonStyle.up= skin.getDrawable("button_06");
         textbuttonStyle.down=skin.getDrawable("button_06");
         textbuttonStyle.checked=skin.getDrawable("button_06");
 
+
         start=new TextButton("Start", textbuttonStyle);
         start.setName("start");
-
         start.setSize(w/3, h/6);
         start.setPosition(w/2-start.getWidth()/2, 9*h/12);
         game.stageMenu.addActor(start);
@@ -89,9 +89,17 @@ public class Menu implements Screen {
     }
 
     private void pressedStart(){
-        game.setScreen(new MyGdxGame(game));
-        dispose();
-        Gdx.app.log("zoran", "2");
+        if(game.secondGame) {
+            game.r.reset();
+            game.mg= new MyGdxGame(game);
+            game.batch= new SpriteBatch();
+        }
+        MyGdxGame k = game.getMygdxGame();
+        game.setScreen(k);
+        k.start();
+
+       /* game.setScreen(game.sum);
+        Gdx.input.setInputProcessor(game.info);*/
     }
 
     private void pressedScores(){
@@ -111,10 +119,13 @@ public class Menu implements Screen {
 
     @Override
     public void dispose() {
-        skin.dispose();
-        buttonAtlas.dispose();
         font.dispose();
     }
+
+
+
+
+
 
     @Override
     public void resize(int width, int height) {

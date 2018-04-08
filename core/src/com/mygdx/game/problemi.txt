@@ -5,17 +5,13 @@ problemi
 3. 2d modeli
 
 da se uradi jos
-1. muzika
-2. meni
-3. in game meni
-4. unos podataka
-5. baza podataka
+1. meni
+2. in game meni
+3. unos podataka meni
+4. baza podataka
+5. muzika
 6. Toast kad se postigne gool
-
-prvo sto ces da implementiras kad sledeci put radis je
-hitting point
-da zamenis bitmap font
-da zavrsis sa modelima i slikama
-
+7. vibrate kad se postigen gol
+8. button u gameu da mu napravis listener nekako
 
 */

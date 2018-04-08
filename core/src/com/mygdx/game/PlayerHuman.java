@@ -3,8 +3,12 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 /**
  * Created by Zoran Milicevic on 3/5/2018.
@@ -18,10 +22,15 @@ public class PlayerHuman extends Thread implements InputProcessor{
     private float delta=10;
     private float vY=0;
 
+    private boolean pause;
+
+    private MyGdxGame parrent;
+    private TextButton button;
+
     private Ball b;
     private Result r;
 
-    public PlayerHuman(Ball b, Result r){
+    public PlayerHuman(Ball b, Result r, final MyGdxGame parrent){
         Texture t= new Texture("player.png");
         spr= new Sprite(t);
         spr.setSize(Gdx.graphics.getWidth()/20, Gdx.graphics.getHeight()/5);
@@ -29,6 +38,24 @@ public class PlayerHuman extends Thread implements InputProcessor{
         spr.setPosition(x,y);
         this.b=b;
         this.r=r;
+        this.parrent=parrent;
+        pause=false;
+
+        TextureAtlas atlas = new TextureAtlas("ui-blue.atlas");
+        Skin s= new Skin();
+        s.addRegions(atlas);
+
+        TextButton.TextButtonStyle style= new TextButton.TextButtonStyle();
+        style.up=s.getDrawable("button_06");
+        style.down=s.getDrawable("button_02");
+        style.checked=s.getDrawable("button_02");
+        style.font= new BitmapFont();
+        button= new TextButton("Pause", style);
+        button.setSize(192, 64);
+        button.setPosition(10, Gdx.graphics.getHeight()-button.getHeight()-10);
+
+
+
     }
 
     @Override
@@ -37,6 +64,7 @@ public class PlayerHuman extends Thread implements InputProcessor{
         try{
             while(!Thread.interrupted()){
                 synchronized (this){
+                    if(pause)wait();
                     float[] info = b.getInfo(); //get data
                     hitHuman(info[0], info[1], info[4], info[5]);
                     AIScored(info[0]);
@@ -73,6 +101,7 @@ public class PlayerHuman extends Thread implements InputProcessor{
             b.resetPosition();
             r.updateResultAI();
             vY=0;
+
         }
     }
 
@@ -88,12 +117,33 @@ public class PlayerHuman extends Thread implements InputProcessor{
     }
 
     @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+    public boolean touchDown(int screenX, int screenY, int pointer, int b) {
+        if(screenX < button.getWidth()+10 && screenY < Gdx.graphics.getHeight()-button.getHeight()-10 ){
+            parrent.pause();
+            return true;
+        }
+
         if(screenY > y+spr.getHeight()/2)vY=delta;
         else vY=-delta;
         return true;
     }
 
+    public synchronized void _pause(){
+        pause=true;
+    }
+
+    public synchronized void _resume(){
+        pause=false;
+        notifyAll();
+    }
+
+    public void _stop(){
+        interrupt();
+    }
+
+    public TextButton getButton() {
+        return button;
+    }
 
 
 
@@ -139,4 +189,6 @@ public class PlayerHuman extends Thread implements InputProcessor{
     public boolean scrolled(int amount) {
         return true;
     }
+
+
 }

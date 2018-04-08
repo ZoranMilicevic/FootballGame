@@ -16,7 +16,7 @@ public class PlayerAI extends Thread {
     private Sprite spr;
     private float delta=10;
     private float vY=0;
-    private boolean flag;
+    private boolean pause;
 
     private Ball b;
     private Result r;
@@ -29,7 +29,7 @@ public class PlayerAI extends Thread {
         spr.setPosition(x, y);
         this.b=b;
         this.r=r;
-        flag=true;
+        pause=false;
     }
 
     @Override
@@ -38,6 +38,7 @@ public class PlayerAI extends Thread {
         try{
             while(!Thread.interrupted()){
                 synchronized (this) {
+                    if(pause)wait();
                     float[] info = b.getInfo(); //get data
                     hitAI(info[0], info[1], info[4], info[5]); //check if hit
                     humanScored(info[0], info[4]);  //check if human scored
@@ -46,7 +47,6 @@ public class PlayerAI extends Thread {
                         hittingPoint=hittingPoint(info[0], info[1], info[2], info[3], info[4], info[5]);
                         if(hittingPoint > y+spr.getHeight())vY=delta;
                         else if(hittingPoint < y)vY=-delta;
-                        flag=false;
                     }
                     else if(info[2]>0)vY=0;
 
@@ -108,7 +108,6 @@ public class PlayerAI extends Thread {
             b.resetPosition();
             r.updateResultHuman();
             vY=0;
-            flag=true;
             Gdx.app.log("zoran", "SCORED!!!");
         }
 
@@ -121,10 +120,22 @@ public class PlayerAI extends Thread {
             if(r1.overlaps(r2)) {
                 b.hit();
                 vY=0;
-                flag=true;
                 Gdx.app.log("zoran", "HIT!!!");
             }
         }
+    }
+
+    public synchronized void _pause(){
+        pause=true;
+    }
+
+    public synchronized void _resume(){
+        pause=false;
+        notifyAll();
+    }
+
+    public void _stop(){
+        interrupt();
     }
 
 }

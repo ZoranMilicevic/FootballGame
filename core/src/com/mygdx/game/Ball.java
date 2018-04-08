@@ -15,11 +15,14 @@ public class Ball extends Thread {
     private float vX;
     private float vY;
     private float delta=20;
+    private boolean pause;
 
 
     public Ball(){
         x= Gdx.graphics.getWidth()/2;
         y=Gdx.graphics.getHeight()/2;
+
+        pause =false;
 
         Texture b=new Texture("ball.png");
         spr=new Sprite(b);
@@ -40,6 +43,7 @@ public class Ball extends Thread {
         try {
             while (!Thread.interrupted()) {
                 synchronized (this) {
+                    if(pause)wait();
                     x += vX;
                     y += vY;
                     spr.setPosition(x, y);
@@ -91,6 +95,19 @@ public class Ball extends Thread {
         vX=-vX;
         x+=vX;
         y+=vY;
+    }
+
+    public synchronized void _pause(){
+        pause=true;
+    }
+
+    public  synchronized void _resume(){
+        pause=false;
+        notifyAll();
+    }
+
+    public void _stop(){
+        interrupt();
     }
 
 }

@@ -8,11 +8,14 @@ public class Result {
     private int AI;
     private int human;
     private String result;
+    private String nameHuman;
+    private String nameAI;
+
 
     public Result(){
         AI=0;
         human=0;
-        result= "AI     " + AI + " : " + human + "     Zoran";
+        result= "AI     " + AI + " : " + human + "     " + nameHuman;
     }
 
     public synchronized void updateResultAI(){
@@ -25,8 +28,38 @@ public class Result {
         result= "AI     " + AI + " : " + human + "     Zoran";
     }
 
+    public synchronized void reset(){
+        AI=0;
+        human=0;
+    }
+
     public synchronized String getResult(){
         return result;
     }
+
+    public void setNameHuman(String name){
+        nameHuman=name;
+    }
+
+    public String getNameHuman(){
+        return nameHuman;
+    }
+
+    public String getNameAI(){
+        return nameAI;
+    }
+
+    public int getHuman(){
+        return human;
+    }
+
+    public int getAI(){
+        return AI;
+    }
+
+    public void writeToDB(){
+
+    }
+
 
 }
